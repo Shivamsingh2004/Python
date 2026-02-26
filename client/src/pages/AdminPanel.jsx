@@ -70,16 +70,16 @@ const AdminPanel = () => {
       {stats && (
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           {[
-            { label: 'Total Users', value: stats.totalUsers, icon: '👥', color: 'blue' },
-            { label: 'Total Blogs', value: stats.totalBlogs, icon: '📝', color: 'green' },
-            { label: 'Published', value: stats.publishedBlogs, icon: '✅', color: 'emerald' },
-            { label: 'Comments', value: stats.totalComments, icon: '💬', color: 'purple' },
-          ].map(({ label, value, icon, color }) => (
+            { label: 'Total Users', value: stats.totalUsers, icon: '👥', colorClass: 'text-blue-600 dark:text-blue-400' },
+            { label: 'Total Blogs', value: stats.totalBlogs, icon: '📝', colorClass: 'text-green-600 dark:text-green-400' },
+            { label: 'Published', value: stats.publishedBlogs, icon: '✅', colorClass: 'text-emerald-600 dark:text-emerald-400' },
+            { label: 'Comments', value: stats.totalComments, icon: '💬', colorClass: 'text-purple-600 dark:text-purple-400' },
+          ].map(({ label, value, icon, colorClass }) => (
             <div key={label} className="card p-5">
               <div className="flex items-center gap-3">
                 <span className="text-2xl">{icon}</span>
                 <div>
-                  <div className={`text-2xl font-bold text-${color}-600 dark:text-${color}-400`}>
+                  <div className={`text-2xl font-bold ${colorClass}`}>
                     {value}
                   </div>
                   <div className="text-xs text-gray-500 dark:text-gray-400">{label}</div>

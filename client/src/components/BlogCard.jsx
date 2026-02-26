@@ -38,7 +38,7 @@ const BlogCard = ({ blog }) => {
             </h2>
           </Link>
           <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-2 mb-3">
-            {blog.content.replace(/<[^>]+>/g, '').slice(0, 150)}...
+            {blog.content.replace(/<[^>]*>/g, '').replace(/</g, '').slice(0, 150)}...
           </p>
 
           <div className="flex items-center justify-between flex-wrap gap-2">

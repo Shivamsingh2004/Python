@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { io } from 'socket.io-client';
 import api from '../utils/axios';
@@ -22,10 +22,7 @@ const BlogDetail = () => {
   useEffect(() => {
     const fetchBlog = async () => {
       try {
-        const [blogRes, commentsRes] = await Promise.all([
-          api.get(`/blogs/${slug}`),
-          api.get(`/comments/${slug}`).catch(() => ({ data: { comments: [] } })),
-        ]);
+        const blogRes = await api.get(`/blogs/${slug}`);
         setBlog(blogRes.data.blog);
         setLikesCount(blogRes.data.blog.likes?.length || 0);
         setLiked(user && blogRes.data.blog.likes?.includes(user._id));

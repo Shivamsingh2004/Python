@@ -71,13 +71,13 @@ const Dashboard = () => {
       {/* Stats */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
         {[
-          { label: 'Published', value: published.length, color: 'blue' },
-          { label: 'Drafts', value: drafts.length, color: 'yellow' },
-          { label: 'Bookmarks', value: bookmarks.length, color: 'green' },
-          { label: 'Followers', value: user?.followers?.length || 0, color: 'purple' },
-        ].map(({ label, value, color }) => (
+          { label: 'Published', value: published.length, colorClass: 'text-blue-600 dark:text-blue-400' },
+          { label: 'Drafts', value: drafts.length, colorClass: 'text-yellow-600 dark:text-yellow-400' },
+          { label: 'Bookmarks', value: bookmarks.length, colorClass: 'text-green-600 dark:text-green-400' },
+          { label: 'Followers', value: user?.followers?.length || 0, colorClass: 'text-purple-600 dark:text-purple-400' },
+        ].map(({ label, value, colorClass }) => (
           <div key={label} className="card p-4 text-center">
-            <div className={`text-2xl font-bold text-${color}-600 dark:text-${color}-400`}>{value}</div>
+            <div className={`text-2xl font-bold ${colorClass}`}>{value}</div>
             <div className="text-sm text-gray-500 dark:text-gray-400">{label}</div>
           </div>
         ))}
