@@ -1,6 +1,6 @@
 const User = require('../models/User');
 const Blog = require('../models/Blog');
-const { cloudinary } = require('../config/cloudinary');
+const { uploadToCloudinary } = require('../config/cloudinary');
 
 // @desc    Get user profile
 // @route   GET /api/users/:id
@@ -36,7 +36,9 @@ const updateProfile = async (req, res, next) => {
     if (bio !== undefined) updateData.bio = bio;
 
     if (req.file) {
-      updateData.profileImage = req.file.path;
+      updateData.profileImage = await uploadToCloudinary(req.file.buffer, {
+        transformation: [{ width: 200, height: 200, crop: 'fill', gravity: 'face', quality: 'auto' }],
+      });
     }
 
     const user = await User.findByIdAndUpdate(req.user._id, updateData, {

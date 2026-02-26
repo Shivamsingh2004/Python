@@ -1,6 +1,7 @@
 const Blog = require('../models/Blog');
 const Comment = require('../models/Comment');
 const User = require('../models/User');
+const { uploadToCloudinary } = require('../config/cloudinary');
 
 // @desc    Create blog
 // @route   POST /api/blogs
@@ -8,7 +9,11 @@ const User = require('../models/User');
 const createBlog = async (req, res, next) => {
   try {
     const { title, content, tags, published } = req.body;
-    const coverImage = req.file ? req.file.path : '';
+
+    let coverImage = '';
+    if (req.file) {
+      coverImage = await uploadToCloudinary(req.file.buffer);
+    }
 
     const parsedTags = tags ? (Array.isArray(tags) ? tags : JSON.parse(tags)) : [];
 
@@ -47,7 +52,9 @@ const updateBlog = async (req, res, next) => {
     if (title) blog.title = title;
     if (content) blog.content = content;
     if (tags) blog.tags = Array.isArray(tags) ? tags : JSON.parse(tags);
-    if (req.file) blog.coverImage = req.file.path;
+    if (req.file) {
+      blog.coverImage = await uploadToCloudinary(req.file.buffer);
+    }
 
     if (published !== undefined) {
       blog.published = published === 'true' || published === true;
