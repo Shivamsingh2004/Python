@@ -76,7 +76,7 @@ blogSchema.pre('save', function (next) {
   }
 
   if (this.isModified('content')) {
-    const words = this.content.replace(/<[^>]*>/g, '').replace(/</g, '').split(/\s+/).length;
+    const words = this.content.replace(/<[^>]*>|</g, '').split(/\s+/).filter(Boolean).length;
     this.readTime = Math.ceil(words / 200);
   }
 
