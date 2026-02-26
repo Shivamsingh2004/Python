@@ -81,9 +81,9 @@ exports.getBlog = async (req, res, next) => {
       return res.status(404).json({ error: 'Blog not found.' });
     }
 
-    // Increment view count
+    // Increment view count atomically
+    await Blog.findByIdAndUpdate(req.params.id, { $inc: { viewCount: 1 } });
     blog.viewCount += 1;
-    await blog.save();
 
     res.json({ blog });
   } catch (error) {
@@ -126,7 +126,7 @@ exports.getTrendingBlogs = async (req, res, next) => {
   try {
     const blogs = await Blog.find({ published: true })
       .populate('author', 'name profileImage')
-      .sort({ viewCount: -1, likes: -1 })
+      .sort({ viewCount: -1, createdAt: -1 })
       .limit(10);
 
     res.json({ blogs });

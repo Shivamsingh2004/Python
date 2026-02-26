@@ -18,8 +18,7 @@ exports.addComment = async (req, res, next) => {
       text,
     });
 
-    blog.commentsCount += 1;
-    await blog.save();
+    await Blog.findByIdAndUpdate(blogId, { $inc: { commentsCount: 1 } });
 
     const populated = await comment.populate('user', 'name profileImage');
 

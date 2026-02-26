@@ -1,4 +1,7 @@
 const request = require('supertest');
+
+process.env.JWT_SECRET = 'test_jwt_secret_for_testing';
+
 const { app } = require('../src/index');
 
 describe('Auth API', () => {
