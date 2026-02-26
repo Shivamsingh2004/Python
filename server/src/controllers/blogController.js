@@ -12,7 +12,6 @@ exports.createBlog = async (req, res, next) => {
       coverImage: coverImage || '',
       tags: tags || [],
       published: published || false,
-      draft: !published,
     });
 
     const populated = await blog.populate('author', 'name profileImage');
@@ -41,7 +40,6 @@ exports.updateBlog = async (req, res, next) => {
     if (tags) blog.tags = tags;
     if (published !== undefined) {
       blog.published = published;
-      blog.draft = !published;
     }
 
     await blog.save();
@@ -201,7 +199,7 @@ exports.getUserBlogs = async (req, res, next) => {
 
     const filter = { author: req.params.userId };
     if (draftOnly) {
-      filter.draft = true;
+      filter.published = false;
     } else {
       filter.published = true;
     }
