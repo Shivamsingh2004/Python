@@ -7,6 +7,10 @@ exports.addComment = async (req, res, next) => {
     const { text } = req.body;
     const blogId = req.params.blogId;
 
+    if (!text || !text.trim()) {
+      return res.status(400).json({ error: 'Comment text is required.' });
+    }
+
     const blog = await Blog.findById(blogId);
     if (!blog) {
       return res.status(404).json({ error: 'Blog not found.' });
