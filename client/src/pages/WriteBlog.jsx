@@ -16,7 +16,7 @@ export default function WriteBlog() {
   const [quillLoaded, setQuillLoaded] = useState(false)
 
   useEffect(() => {
-    import('react-quill').then((mod) => {
+    import('react-quill-new').then((mod) => {
       QuillRef.current = mod.default
       setQuillLoaded(true)
     })
